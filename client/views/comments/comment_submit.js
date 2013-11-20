@@ -12,7 +12,8 @@ Template.commentSubmit.events({
       if (error){
         throwError(error.reason);
       } else {
-        $body.val('');
+       // $body.val('');
+        Meteor.Router.to('postPageProject', Session.get('currentPostId'));
       }
     });
   }

@@ -3,7 +3,28 @@
     <a href="#" class="upvote btn {{upvotedClass}}">⬆</a>
     <div class="post-content">
       <h3><a href="{{url}}">{{title}}</a><span>{{domain}}</span></h3>
-      <h4> status = {{status}} </h4>
+      <h4>{{description}}</h4>
+      <h5> status = {{status}} </h5>
+      <p>
+        {{pluralize votes "Vote"}},
+        submitted by {{author}},
+        <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
+        {{#if ownPost}}<a href="{{postEditPath this}}">Edit</a>{{/if}}
+      </p>
+    </div>
+    <a href="{{postPageProjectPath this}}" class="discuss btn">Discuss</a>
+  </div>
+</template>
+
+<template name="postItemPage">
+  
+  
+  <div class="post">
+    <a href="#" class="upvote btn {{upvotedClass}}">⬆</a>
+    <div class="post-content">
+      <h3><a href="{{url}}">{{title}}</a><span>{{domain}}</span></h3>
+      <h4>{{description}}</h4>
+      <h5> status = {{status}} </h5>
       <p>
         {{pluralize votes "Vote"}},
         submitted by {{author}},

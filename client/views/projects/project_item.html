@@ -1,10 +1,9 @@
 <template name="projectItem">
   <div class="post">
     <div class="post-content">
-      <h3>{{title}}<span>{{description}}</span></h3>
+      <h3>{{title}}<span>  -  {{description}}</span></h3>
+      
       <p>
-      submitted by {{owner}}
-     
         {{#if ownProject}}<a href="{{projectEditPath this}}">Edit</a>{{/if}}
       </p>
     </div>
@@ -16,10 +15,9 @@
 <template name="projectItemPage">
   <div class="post">
     <div class="post-content">
-      <h3>{{title}}<span>{{description}}</span></h3>
+      <h3>{{title}}</h3>
+      <span>{{description}}</span>
       <p>
-      submitted by {{owner}}
-     
         {{#if ownProject}}<a href="{{projectEditPath this}}">Edit</a>{{/if}}
       </p>
     </div>

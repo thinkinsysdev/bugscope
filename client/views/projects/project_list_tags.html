@@ -1,0 +1,30 @@
+<template name="projectListTags">
+ 
+   
+    {{#if projectCount}}
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+     Projects
+      <span class="badge badge-inverse">{{projectCount}}</span>
+      <b class="caret"></b>
+       </a>
+    {{/if}}
+  
+
+  <ul class="notification dropdown-menu">
+    {{#if projectCount}}
+      {{#each projects}}
+        {{> project}}
+      {{/each}}
+    {{else}}
+    <li><span><a href="{{addProjectsPath}}"> Add Project </a></span></li>
+    {{/if}}
+  </ul>
+</template>
+
+<template name="project">
+  <li>
+    <a href="{{projectPagePath _id}}">
+      {{title}}
+    </a>
+  </li>
+</template>

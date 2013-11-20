@@ -1,7 +1,39 @@
 <template name="postPage">
   {{#with currentPost}}
     {{> postItem}}
+  
+    <ul class="comments">
+      {{#each comments}}
+        {{> comment}}
+      {{/each}}
+    </ul>
     
+    {{#if currentUser}}
+      {{> commentSubmit}}
+    {{else}}
+      <p>Please log in to leave a comment.</p>
+    {{/if}}
+  {{/with}}
+</template>
+
+<template name="postPageProject">
+  {{#with currentProject}}
+    <div class="post">
+    <div class="post-content">
+      <h3>{{title}}<span>  -  {{description}}</span></h3>
+      
+      <p>
+        {{#if ownProject}}<a href="{{projectEditPath this}}">Edit</a>{{/if}}
+      </p>
+    </div>
+    <a href="{{projectPagePath this}}" class="discuss btn">View Defects</a>
+  </div>
+  
+  {{/with}}
+  
+  {{#with currentPost}}
+    {{> postItem}}
+  
     <ul class="comments">
       {{#each comments}}
         {{> comment}}

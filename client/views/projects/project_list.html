@@ -1,5 +1,7 @@
 <template name="projectList">
   <div class="posts">
+    {{#if currentUser}}
+    
     {{#if noprojects}}
     <p> Click on Add a project to start. </p>
     {{/if}}
@@ -7,13 +9,15 @@
       {{> projectItem}}
     
    {{/each}}
-         {{#if projectsReady}}
+     {{#if projectsReady}}
       {{#unless allProjectsLoaded}}
     		<a class="load-more" href="#">Load more</a>
       {{/unless}}
     {{else}}
       <div>{{> spinner}}</div>
     {{/if}}
-
+    {{else}}
+     You need to log in.
+    {{/if}}
   </div>
 </template>

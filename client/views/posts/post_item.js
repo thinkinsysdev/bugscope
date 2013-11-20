@@ -1,6 +1,14 @@
 Template.postItem.helpers({
   ownPost: function() {
-    return this.userId == Meteor.userId();
+    var isAdminProject = false;
+    console.log(Projects.findOne({_id: Session.get('currentProjectId'), admin: {$in: [Meteor.userId()]}}));
+    if(Projects.findOne({_id: Session.get('currentProjectId'), admin: {$in: [Meteor.userId()]}}))
+    { isAdminProject = true;}
+    
+    var isTester = false;
+    if(Projects.findOne({_id: Session.get('currentProjectId'), tester: {$in: [Meteor.userId()]}}))
+      isTester = true;
+    return ((this.userId == Meteor.userId()) || isAdminProject || isTester);
   },
   domain: function() {
     var a = document.createElement('a');

@@ -28,5 +28,6 @@ Meteor.publish('notifications', function() {
 });
 
 Meteor.publish('projects', function(limit) {
+  console.log(this.userId);
   return Projects.find({userId: this.userId}, {sort: {submitted: -1}, limit: limit});
 });

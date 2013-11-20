@@ -14,6 +14,7 @@ if (! Meteor.users.findOne({'username':'tanmay'}) )
     }); //Added close parenthesis.
 }
 var userID = Meteor.users.findOne({"username":"tanmay"});
+var testerID = Meteor.users.findOne({"username":"tan80"});
 
 Posts.remove({});
 Projects.remove({});
@@ -27,6 +28,8 @@ if (Projects.find().count() === 0) {
     userId: userID._id,
     author: userID.profile.name,
     owner: userID.username,
+    admin: [userID._id],
+    tester: [testerID._id],
       description: 'First Project Entry',
       startdate: new Date().getTime(),
       submitted: new Date().getTime(),
@@ -101,8 +104,23 @@ if (Projects.find().count() === 0) {
       nstatus='open';
    else nstatus = 'new';
     console.log('status : ' + nstatus);
-    Posts.insert({
-      title: 'Test post #' + i,
+ 
+    
+    prjId =  Projects.insert({
+    title: 'Test Project#' + i,
+    userId: userID._id,
+    author: userID.profile.name,
+       owner: userID.username,
+     admin: [userID._id],
+    tester: [testerID._id],
+      description: 'Test Project for testing ' + i,
+      startdate: new Date().getTime(),
+      submitted: new Date().getTime(),
+      defects: [], defectcount:0
+  });
+       Posts.insert({
+      title: 'Defect Found #' + i,
+         description: "Defect found while testing Browser version " + i,
        projectId: prjId,
       author: sacha.profile.name,
       userId: sacha._id,
@@ -112,17 +130,6 @@ if (Projects.find().count() === 0) {
       commentsCount: 0,
       upvoters: [], votes: 0
     });     
-    
-     Projects.insert({
-    title: 'Test Project#' + i,
-    userId: userID._id,
-    author: userID.profile.name,
-       owner: userID.username,
-      description: 'Test Project for testing ' + i,
-      startdate: new Date().getTime(),
-      submitted: new Date().getTime(),
-      defects: [], defectcount:0
-  });
     
   }
 }

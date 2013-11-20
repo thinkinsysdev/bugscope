@@ -15,11 +15,15 @@ Posts.deny({
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user(),
-      postWithSameLink = Posts.findOne({url: postAttributes.url});
+      postWithSameLink = Posts.findOne({url: postAttributes.url}),
+    projectWithUser = (Projects.findOne({_id: postAttributes.projectId, tester: {$in: [Meteor.userId()]}}));
     
     // ensure the user is logged in
     if (!user)
       throw new Meteor.Error(401, "You need to login to post new stories");
+    
+    if (!projectWithUser)
+      throw new Meteor.Error(444, "You do not have permission to add a defect to this project. Contact the project admin.");
     
     // ensure the post has a title
     if (!postAttributes.title)
@@ -31,9 +35,9 @@ Meteor.methods({
         'This link has already been posted', 
         postWithSameLink._id);
     }
-    
+    console.log('projectID: ' + postAttributes.projectId);
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message'), {
+    var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message', 'projectId'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
