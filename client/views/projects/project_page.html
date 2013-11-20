@@ -1,0 +1,10 @@
+<template name="projectPage">
+  {{#with currentProject}}
+    {{> projectItemPage}}
+  <h3> Total logged defects: {{projectPostCount}}, New: {{newPostCount}}, Open: {{openPostCount}} </h3>
+  {{#each currentProjectPosts}}
+  {{> postItem}}
+  
+  {{/each}}
+  {{/with}}
+</template>

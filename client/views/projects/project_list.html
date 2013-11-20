@@ -1,0 +1,19 @@
+<template name="projectList">
+  <div class="posts">
+    {{#if noprojects}}
+    <p> Click on Add a project to start. </p>
+    {{/if}}
+    {{#each projects}}
+      {{> projectItem}}
+    
+   {{/each}}
+         {{#if projectsReady}}
+      {{#unless allProjectsLoaded}}
+    		<a class="load-more" href="#">Load more</a>
+      {{/unless}}
+    {{else}}
+      <div>{{> spinner}}</div>
+    {{/if}}
+
+  </div>
+</template>

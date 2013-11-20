@@ -1,8 +1,9 @@
 Meteor.Router.add({
   '/': {to: 'newPosts', as: 'home'},
+  '/projects' : 'projectList',
   '/best': 'bestPosts',
   '/new': 'newPosts',
-  
+    '/open': 'openPosts',
   '/posts/:_id': {
     to: 'postPage', 
     and: function(id) { Session.set('currentPostId', id); }
@@ -12,8 +13,16 @@ Meteor.Router.add({
     to: 'postEdit', 
     and: function(id) { Session.set('currentPostId', id); }    
   },
-  
-  '/submit': 'postSubmit'
+    '/projects/:_id': {
+    to: 'projectPage', 
+    and: function(id) { Session.set('currentProjectId', id); }
+  },
+    '/projects/:_id/edit': {
+    to: 'projectEdit', 
+    and: function(id) { Session.set('currentProjectId', id); }
+  },
+  '/submit': 'postSubmit',
+  '/addProject':'projectSubmit'
 });
 
 Meteor.Router.filters({
@@ -30,6 +39,6 @@ Meteor.Router.filters({
     return page;
   }
 });
-
+Meteor.Router.filter('requireLogin', {only: 'projectSubmit'});
 Meteor.Router.filter('requireLogin', {only: 'postSubmit'});
 Meteor.Router.filter('clearErrors');

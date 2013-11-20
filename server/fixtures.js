@@ -1,6 +1,38 @@
 // Fixture data 
-if (Posts.find().count() === 0) {
+// Fixture data 
+if (! Meteor.users.findOne({'username':'tanmay'}) )
+{
+    Accounts.createUser({
+        username: 'tanmay',
+        email: 'tanmay@fxt.com',
+        password: 'asdfasdf',
+        profile: {
+            first_name: 'fname',
+            last_name: 'lname',
+            company: 'company',
+        }
+    }); //Added close parenthesis.
+}
+var userID = Meteor.users.findOne({"username":"tanmay"});
+
+Posts.remove({});
+Projects.remove({});
+if (Projects.find().count() === 0) {
+  
+  
   var now = new Date().getTime();
+  
+  var prjId = Projects.insert({
+    title: 'Introducing Telescope',
+    userId: userID._id,
+    author: userID.profile.name,
+    owner: userID.username,
+      description: 'First Project Entry',
+      startdate: new Date().getTime(),
+      submitted: new Date().getTime(),
+      defects: [], defectcount:0
+  });
+  
   
   // create two users
   var tomId = Meteor.users.insert({
@@ -11,12 +43,13 @@ if (Posts.find().count() === 0) {
     profile: { name: 'Sacha Greif' }
   });
   var sacha = Meteor.users.findOne(sachaId);
-  
   var telescopeId = Posts.insert({
     title: 'Introducing Telescope',
+    projectId: prjId,
     userId: sacha._id,
     author: sacha.profile.name,
     url: 'http://sachagreif.com/introducing-telescope/',
+    status: 'open',
     submitted: now - 7 * 3600 * 1000,
     commentsCount: 2,
     upvoters: [], votes: 0
@@ -41,8 +74,10 @@ if (Posts.find().count() === 0) {
   Posts.insert({
     title: 'Meteor',
     userId: tom._id,
+     projectId: prjId,
     author: tom.profile.name,
     url: 'http://meteor.com',
+    status: 'new',
     submitted: now - 10 * 3600 * 1000,
     commentsCount: 0,
     upvoters: [], votes: 0
@@ -51,22 +86,43 @@ if (Posts.find().count() === 0) {
   Posts.insert({
     title: 'The Meteor Book',
     userId: tom._id,
+     projectId: prjId,
     author: tom.profile.name,
     url: 'http://themeteorbook.com',
+    status: 'open',
     submitted: now - 12 * 3600 * 1000,
     commentsCount: 0,
     upvoters: [], votes: 0
   });
-  
+  var nstatus ='open';
   for (var i = 0; i < 10; i++) {
+    
+    if (nstatus=='new') 
+      nstatus='open';
+   else nstatus = 'new';
+    console.log('status : ' + nstatus);
     Posts.insert({
       title: 'Test post #' + i,
+       projectId: prjId,
       author: sacha.profile.name,
       userId: sacha._id,
       url: 'http://google.com/?q=test-' + i,
+      status: nstatus,
       submitted: now - i * 3600 * 1000 + 1,
       commentsCount: 0,
       upvoters: [], votes: 0
-    });
+    });     
+    
+     Projects.insert({
+    title: 'Test Project#' + i,
+    userId: userID._id,
+    author: userID.profile.name,
+       owner: userID.username,
+      description: 'Test Project for testing ' + i,
+      startdate: new Date().getTime(),
+      submitted: new Date().getTime(),
+      defects: [], defectcount:0
+  });
+    
   }
 }

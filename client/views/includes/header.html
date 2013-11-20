@@ -6,18 +6,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="{{postsListPath}}">Microscope</a>
+      <a class="brand" href="{{postsListPath}}">BugScope</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li class="{{activeRouteClass 'home' 'newPosts'}}">
-            <a href="{{homePath}}">New</a>
+          <li class="{{activeRouteClass  'projectList'}}">
+            <a href="{{projectListPath}}">All</a>
           </li>
-          <li class="{{activeRouteClass  'bestPosts'}}">
-            <a href="{{bestPostsPath}}">Best</a>
-          </li>
+          
           {{#if currentUser}}
             <li>
-              <a href="{{postSubmitPath}}">Submit Post</a>
+              <a href="{{projectSubmitPath}}">Add Project</a>
             </li>
             <li class="dropdown">
               {{> notifications}}
